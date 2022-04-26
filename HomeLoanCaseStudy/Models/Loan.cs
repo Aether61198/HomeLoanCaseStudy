@@ -11,12 +11,12 @@ namespace HomeLoanCaseStudy.Models
     {
         [Key, ForeignKey("User")]
         public int ID { get; set; }
-        public bool IsApproved { get; set; } // FLAG FOR CHECKING IF THE LOAN IS APPROVED OR NOT
-        public double LoanAmount { get; set; } // THE AMOUNT OF LOAN HE HAS AVAILED (DIFFERENT FROM MAX LOAN AMOUNT)
-        public int NoOfEmi { get; set; } // NO OF EMIs THE USER HAS TO PAY
-        public int Tenure { get; set; } // TIME IN MONTHS FOR WHICH THE USER HAS TAKEN THE LOAN
-        public double EmiAmount { get; set; } // THE AMOUNT THAT THE USER HAS TO PAY AS EMI EVERY MONTH
-        public bool IsLoanCompleted { get; set; } // FLAG FOR CHECKING IF THE USER HAS PAID ALL THE EMIs
+        public bool? IsApproved { get; set; } // FLAG FOR CHECKING IF THE LOAN IS APPROVED OR NOT
+        public double? LoanAmount { get; set; } // THE AMOUNT OF LOAN HE HAS AVAILED (DIFFERENT FROM MAX LOAN AMOUNT)
+        public int? NoOfEmi { get; set; } // NO OF EMIs THE USER HAS TO PAY
+        public int? Tenure { get; set; } // TIME IN MONTHS FOR WHICH THE USER HAS TAKEN THE LOAN
+        public double? EmiAmount { get; set; } // THE AMOUNT THAT THE USER HAS TO PAY AS EMI EVERY MONTH
+        public bool? IsLoanCompleted { get; set; } // FLAG FOR CHECKING IF THE USER HAS PAID ALL THE EMIs
 
         // ASSOCIATION WITH USER TABLE
         [Required]
