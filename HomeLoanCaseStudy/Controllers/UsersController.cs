@@ -1,18 +1,16 @@
-﻿using System;
+﻿using HomeLoanCaseStudy.Models;
+using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
 using System.Linq;
-using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using HomeLoanCaseStudy.Models;
+using System.Web.Security;
 
 namespace HomeLoanCaseStudy.Controllers
 {
     public class UsersController : Controller
     {
-        private HomeLoanDbContext db = new HomeLoanDbContext();
+        private readonly HomeLoanDbContext db = new HomeLoanDbContext();
 
         // GET: Users
         public ActionResult Index()
@@ -20,108 +18,94 @@ namespace HomeLoanCaseStudy.Controllers
             return View(db.Users.ToList());
         }
 
-        // GET: Users/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            User user = db.Users.Find(id);
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
-            return View(user);
-        }
-
-        // GET: Users/Create
-        public ActionResult Create()
+        public ActionResult Register()
         {
             return View();
         }
 
-        // POST: Users/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,FirstName,LastName,PhoneNumber,EmailAdress,Password,Gender,DateOfBirth,MaxLoanAmount,PanNumber,MonthlySalary,EmployementType,RetirementAge,OrganizationType,EmployerName,AccountNumber")] User user)
+        public ActionResult Register(User user)
         {
+            bool Status = false;
+            string message;
+
             if (ModelState.IsValid)
             {
+                var isExist = IsEmailExist(user.EmailAddress);
+                if (isExist)
+                {
+                    ModelState.AddModelError("EmailExist", "Email Already Exists");
+                    return View(user);
+                }
+
+                user.Password = Crypto.Hash(user.Password);
+                user.ConfirmPassword = Crypto.Hash(user.ConfirmPassword);
+
                 db.Users.Add(user);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                message = "Registration Done Successfully!";
+                Status = true;
             }
-
+            else
+            {
+                message = "Invalid Request";
+            }
+            ViewBag.Message = message;
+            ViewBag.Status = Status;
             return View(user);
         }
 
-        // GET: Users/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Login()
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            User user = db.Users.Find(id);
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
-            return View(user);
+            return View();
         }
 
-        // POST: Users/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,FirstName,LastName,PhoneNumber,EmailAdress,Password,Gender,DateOfBirth,MaxLoanAmount,PanNumber,MonthlySalary,EmployementType,RetirementAge,OrganizationType,EmployerName,AccountNumber")] User user)
+        public ActionResult Login(User user, string returnUrl)
         {
-            if (ModelState.IsValid)
+            var obj = db.Users.Where(u => u.EmailAddress.Equals(user.EmailAddress)).FirstOrDefault();
+            if (obj != null)
             {
-                db.Entry(user).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (string.Compare(Crypto.Hash(user.Password), obj.Password) == 0)
+                {
+                    FormsAuthentication.SetAuthCookie(user.EmailAddress, user.RememberMe);
+                    if (Url.IsLocalUrl(returnUrl))
+                    {
+                        return Redirect(returnUrl);
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
+                }
+                else
+                {
+                    ViewBag.Message = "Wrong Password";
+                    return View();
+                }
             }
-            return View(user);
+            else
+            {
+                ViewBag.Message = "Email does not match with any existing user";
+                return View();
+            }
         }
 
-        // GET: Users/Delete/5
-        public ActionResult Delete(int? id)
+        [Authorize]
+        [HttpPost]
+        public ActionResult Logout()
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            User user = db.Users.Find(id);
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
-            return View(user);
+            FormsAuthentication.SignOut();
+            return RedirectToAction("Index", "Home");
         }
 
-        // POST: Users/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        [NonAction]
+        public bool IsEmailExist(string emailId)
         {
-            User user = db.Users.Find(id);
-            db.Users.Remove(user);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
+            var obj = db.Users.Where(u => u.EmailAddress.Equals(emailId)).FirstOrDefault();
+            return obj != null;
         }
     }
 }
