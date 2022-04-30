@@ -28,7 +28,7 @@ namespace HomeLoanCaseStudy.Controllers
         public ActionResult Register(User user)
         {
             bool Status = false;
-            string message = "";
+            string message;
 
             if (ModelState.IsValid)
             {
@@ -42,13 +42,10 @@ namespace HomeLoanCaseStudy.Controllers
                 user.Password = Crypto.Hash(user.Password);
                 user.ConfirmPassword = Crypto.Hash(user.ConfirmPassword);
 
-                using(HomeLoanDbContext db = new HomeLoanDbContext())
-                {
-                    db.Users.Add(user);
-                    db.SaveChanges();
-                    message = "Registration Done Successfully!";
-                    Status = true;
-                }
+                db.Users.Add(user);
+                db.SaveChanges();
+                message = "Registration Done Successfully!";
+                Status = true;
             }
             else
             {
@@ -64,8 +61,8 @@ namespace HomeLoanCaseStudy.Controllers
             return View();
         }
 
-        [HttpGet]
-/*        [ValidateAntiForgeryToken]*/
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Login(User user, string returnUrl)
         {
             var obj = db.Users.Where(u => u.EmailAddress.Equals(user.EmailAddress)).FirstOrDefault();
@@ -80,18 +77,18 @@ namespace HomeLoanCaseStudy.Controllers
                     }
                     else
                     {
-                        return RedirectToAction("Index", "LoggedInUser");
+                        return RedirectToAction("Index", "Home");
                     }
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Invalid Email");
+                    ViewBag.Message = "Wrong Password";
                     return View();
                 }
             }
             else
             {
-                ModelState.AddModelError("", "Invalid Email");
+                ViewBag.Message = "Email does not match with any existing user";
                 return View();
             }
         }
@@ -107,11 +104,8 @@ namespace HomeLoanCaseStudy.Controllers
         [NonAction]
         public bool IsEmailExist(string emailId)
         {
-            using (HomeLoanDbContext db = new HomeLoanDbContext())
-            {
-                var obj = db.Users.Where(u => u.EmailAddress.Equals(emailId)).FirstOrDefault();
-                return obj != null;
-            }
+            var obj = db.Users.Where(u => u.EmailAddress.Equals(emailId)).FirstOrDefault();
+            return obj != null;
         }
     }
 }

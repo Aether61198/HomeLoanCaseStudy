@@ -12,12 +12,12 @@ namespace HomeLoanCaseStudy.Models
         public int Id { get; set; } //PRIMARY KEY
 
         //LOGIN DETAILS OF THE USER
-        [Required]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Email ID required")]
         [Display(Name = "Email Address")]
         [DataType(DataType.EmailAddress, ErrorMessage = "Email is not valid")]
         public string EmailAddress { get; set; }
 
-        [Required]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Password required")]
         [DataType(DataType.Password)]
         [MinLength(6, ErrorMessage = "Minimum 6 Characters required")]
         public string Password { get; set; }

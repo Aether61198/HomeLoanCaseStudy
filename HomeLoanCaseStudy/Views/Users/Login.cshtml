@@ -9,7 +9,7 @@
 
 @using (Html.BeginForm())
 {
-    @*@Html.AntiForgeryToken()*@
+    @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
         <hr />
@@ -46,6 +46,13 @@
             </div>
         </div>
     </div>
+
+    if (ViewBag.Message != null)
+    {
+        <div class="alert alert-danger">
+            <strong>Error! </strong>@ViewBag.Message
+        </div>
+    }
 }
 
 <div>
