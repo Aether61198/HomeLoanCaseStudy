@@ -1,0 +1,33 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index </h2>
+
+@using (Html.BeginForm())
+{
+    <div class="form-horizontal">
+        <hr />
+        <div class="form-group">
+            @Html.Label("Amount", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.Editor("LoanAmt", new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Tenure", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.Editor("tenure", new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+
+        @ViewBag.Message
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Calculate" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}

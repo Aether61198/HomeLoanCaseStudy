@@ -1,4 +1,4 @@
-﻿@model IEnumerable<HomeLoanCaseStudy.Models.User>
+﻿@model IEnumerable<HomeLoanCaseStudy.Models.Users>
 
 @{
     ViewBag.Title = "Index";
@@ -24,7 +24,7 @@
             @Html.DisplayNameFor(model => model.EmailAddress)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.AccountNumber)
+            @Html.DisplayNameFor(model => model.UserRole)
         </th>
         <th></th>
     </tr>
@@ -42,7 +42,7 @@
                 @Html.DisplayFor(modelItem => item.EmailAddress)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.AccountNumber)
+                @Html.DisplayFor(modelItem => item.UserRole)
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |

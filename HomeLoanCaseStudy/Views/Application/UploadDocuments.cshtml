@@ -1,0 +1,58 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<h2>PersonalDetails</h2>
+
+@using (Html.BeginForm("UploadDocuments", "Application", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            <label for="file" class="control-label col-md-2">PAN Card:</label>
+            <div class="col-md-10" style="margin-top: 6px">
+                <input type="file" name="file" accept="application/pdf" required />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="file" class="control-label col-md-2">Salary Slip:</label>
+            <div class="col-md-10" style="margin-top: 6px">
+                <input type="file" name="file" accept="application/pdf" required />
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="file" class="control-label col-md-2">LOA:</label>
+            <div class="col-md-10" style="margin-top: 6px">
+                <input type="file" name="file" accept="application/pdf" required />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="file" class="control-label col-md-2">NOC from builder:</label>
+            <div class="col-md-10" style="margin-top: 6px">
+                <input type="file" name="file" accept="application/pdf" required />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="file" class="control-label col-md-2">Agreement to Sale:</label>
+            <div class="col-md-10" style="margin-top: 6px">
+                <input type="file" name="file" accept="application/pdf" required />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Submit" class="btn btn-default" />
+            </div>
+        </div>
+        @ViewBag.Message
+    </div>
+}

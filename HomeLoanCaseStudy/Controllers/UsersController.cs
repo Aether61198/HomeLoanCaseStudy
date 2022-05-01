@@ -8,6 +8,7 @@ using System.Web.Security;
 
 namespace HomeLoanCaseStudy.Controllers
 {
+    [NoDirectAccess]
     public class UsersController : Controller
     {
         private readonly HomeLoanDbContext db = new HomeLoanDbContext();
@@ -25,7 +26,7 @@ namespace HomeLoanCaseStudy.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(User user)
+        public ActionResult Register(Users user)
         {
             bool Status = false;
             string message;
@@ -44,6 +45,13 @@ namespace HomeLoanCaseStudy.Controllers
 
                 db.Users.Add(user);
                 db.SaveChanges();
+
+                if (user.UserRole == "Customer")
+                {
+                    db.UserDetails.Add(new UserDetails() { Id = user.Id });
+                    db.Loans.Add(new Loan() { Id = user.Id, InterestRate = 8.5f, IsApproved = false });
+                    db.SaveChanges();
+                }
                 message = "Registration Done Successfully!";
                 Status = true;
             }
@@ -63,14 +71,15 @@ namespace HomeLoanCaseStudy.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(User user, string returnUrl)
+        public ActionResult Login(Users user, string returnUrl)
         {
             var obj = db.Users.Where(u => u.EmailAddress.Equals(user.EmailAddress)).FirstOrDefault();
             if (obj != null)
             {
                 if (string.Compare(Crypto.Hash(user.Password), obj.Password) == 0)
                 {
-                    FormsAuthentication.SetAuthCookie(user.EmailAddress, user.RememberMe);
+                    bool check = Request["RememberMe"].ToString() == "true,false";
+                    FormsAuthentication.SetAuthCookie(user.EmailAddress, check);
                     if (Url.IsLocalUrl(returnUrl))
                     {
                         return Redirect(returnUrl);
@@ -83,13 +92,13 @@ namespace HomeLoanCaseStudy.Controllers
                 else
                 {
                     ViewBag.Message = "Wrong Password";
-                    return View();
+                    return View(user);
                 }
             }
             else
             {
                 ViewBag.Message = "Email does not match with any existing user";
-                return View();
+                return View(user);
             }
         }
 

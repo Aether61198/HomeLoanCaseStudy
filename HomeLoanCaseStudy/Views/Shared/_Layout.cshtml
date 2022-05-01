@@ -3,35 +3,41 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>Home Loan</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
         <div class="container">
             <a class="navbar-brand" href="/">
-                <img src="~/assets/HomeLoan.png" width="20" height="20" class="d-inline-block align-top" alt="">
+                <img src="~/assets/HomeLoan.png" width="30" height="30" class="d-inline-block align-top" alt="">
+                Home Loan
             </a>
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Home Loan", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Admin", "Index", "Users")</li>
-                    <li>@Html.ActionLink("About Us", "About", "Home")</li>
-                    <li>@Html.ActionLink("Calculator", "", "")</li>
-                    <li>@Html.ActionLink("Contact Us", "Contact", "Home")</li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="/Users/Login">Login</a></li>
-                    <li><a href="/Users/Register">Register</a></li>
-                </ul>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <div class="navbar-collapse collapse">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li><a class="nav-link" href="/Users/Index">Admin</a></li>
+                        <li><a class="nav-link" href="/Home/About">About Us</a></li>
+                        <li><a class="nav-link" href="/Calculator/Index">Calculator</a></li>
+                        <li><a class="nav-link" href="/Home/Contact">Contact Us</a></li>
+                    </ul>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        using (Html.BeginForm("Logout", "Users", FormMethod.Post, new { id = "logoutForm" }))
+                        {
+                            <button class="btn btn-outline-light me-2" type="button" onclick="location.href='javascript:document.getElementById(`logoutForm`).submit()'">Logout</button>
+                        }
+                    }
+                    else
+                    {
+                        <button class="btn btn-outline-light" type="button" onclick="location.href='@Url.Action("Login", "Users")'">Login</button>
+                        <button class="btn btn-light" type="button" onclick="location.href='@Url.Action("Register", "Users")'">Register</button>
+                    }
+                </div>
             </div>
         </div>
     </nav>
