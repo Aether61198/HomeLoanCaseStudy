@@ -131,6 +131,7 @@
     <Compile Include="Controllers\ApplicationController.cs" />
     <Compile Include="Controllers\CalculatorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LoanTrackerController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Crypto.cs" />
     <Compile Include="Global.asax.cs">
@@ -138,8 +139,10 @@
     </Compile>
     <Compile Include="Models\HomeLoanDbContext.cs" />
     <Compile Include="Models\Loan.cs" />
+    <Compile Include="Models\SingleUserViewModel.cs" />
     <Compile Include="Models\Users.cs" />
     <Compile Include="Models\UserDetails.cs" />
+    <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -228,7 +231,7 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Users\Register.cshtml" />
-    <Content Include="Views\Users\Index.cshtml" />
+    <Content Include="Views\Home\Admin.cshtml" />
     <Content Include="Views\Users\Login.cshtml" />
     <Content Include="Views\Application\PropertyDetails.cshtml" />
     <Content Include="Views\Application\EmploymentDetails.cshtml" />
@@ -236,6 +239,7 @@
     <Content Include="Views\Application\PersonalDetails.cshtml" />
     <Content Include="Views\Application\UploadDocuments.cshtml" />
     <Content Include="Views\Calculator\Index.cshtml" />
+    <Content Include="Views\LoanTracker\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

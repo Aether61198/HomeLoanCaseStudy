@@ -13,10 +13,23 @@ namespace HomeLoanCaseStudy.Controllers
     public class ApplicationController : Controller
     {
         private readonly HomeLoanDbContext db = new HomeLoanDbContext();
+
         // GET: Application
         public ActionResult Index()
         {
-            return RedirectToAction("PropertyDetails");
+            var obj = db.Users.Where(u => u.EmailAddress.Equals(User.Identity.Name)).FirstOrDefault();
+            if (obj.UserRole == "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var userDetailsObj = db.UserDetails.Where(ud => ud.Id.Equals(obj.Id)).FirstOrDefault();
+            if(userDetailsObj.AccountNumber == null)
+            {
+                return RedirectToAction("PropertyDetails");
+            }
+
+            return RedirectToAction("Index", "LoanTracker");
         }
 
         public ActionResult PropertyDetails()
@@ -156,6 +169,9 @@ namespace HomeLoanCaseStudy.Controllers
                         ViewBag.Message = "You have not uploaded all files.";
                     }
                 }
+                var userDetailsObj = db.UserDetails.Where(u => u.Id.Equals(obj.Id)).FirstOrDefault();
+                userDetailsObj.AccountNumber = 1000 + Convert.ToInt32(obj.Id);
+                db.SaveChanges();
                 return RedirectToAction("Index", "Home");
             }
             else

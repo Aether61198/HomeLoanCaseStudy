@@ -1,4 +1,6 @@
-﻿@{
+﻿@model HomeLoanCaseStudy.Models.UserDetails
+
+@{
     ViewBag.Title = "Home Page";
 }
 
@@ -8,10 +10,30 @@
                  position-absolute top-50 start-50 translate-middle user-select-none">
             <p class="text-white-50 bd-highlight fs-2">Easy & Simple Application Process</p>
             <h1 class="homepage-heading bd-highlight">Connecting<br />All Your Loan<br />Needs</h1>
-            <a href="@Url.Action("Index", "Application")" class="btn btn-lg btn-primary p-3 m-4 bd-highlight">
-                Apply Now
-                <i class="fa fa-arrow-right"></i>
-            </a>
+            @if (User.Identity.IsAuthenticated)
+            {
+                if (Model.AccountNumber != null)
+                {
+                    <a href="@Url.Action("Index", "LoanTracker")" class="btn btn-lg btn-primary p-3 m-4 bd-highlight">
+                        Track your Application
+                        <i class="fa fa-arrow-right"></i>
+                    </a>
+                }
+                else
+                {
+                    <a href="@Url.Action("Index", "Application")" class="btn btn-lg btn-primary p-3 m-4 bd-highlight">
+                        Apply Now
+                        <i class="fa fa-arrow-right"></i>
+                    </a>
+                }
+            }
+            else
+            {
+                <a href="@Url.Action("Index", "Application")" class="btn btn-lg btn-primary p-3 m-4 bd-highlight">
+                    Apply Now
+                    <i class="fa fa-arrow-right"></i>
+                </a>
+            }
         </div>
     </div>
 </div>

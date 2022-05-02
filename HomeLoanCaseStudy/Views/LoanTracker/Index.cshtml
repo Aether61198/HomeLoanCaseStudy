@@ -1,0 +1,116 @@
+﻿@model HomeLoanCaseStudy.Models.SingleUserViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>User Loan Details</h2>
+
+<div class="container text-black" style="padding: 0;">
+    <div class="col-md-8">
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <h6 class="mb-0">Full Name</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        @Model.User.FirstName @Model.User.LastName
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <h6 class="mb-0">Account Number</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        @Model.UserDetails.AccountNumber
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <h6 class="mb-0">Email Address</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        @Model.User.EmailAddress
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <h6 class="mb-0">Phone Number</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        @Model.UserDetails.PhoneNumber
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <h6 class="mb-0">Gender</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        @Model.UserDetails.Gender
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <h6 class="mb-0">PAN Number</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        @Model.UserDetails.PanNumber
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <h6 class="mb-0">Monthly Salary</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        @Model.UserDetails.MonthlySalary
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <h6 class="mb-0">Loan Amount</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        @Model.Loan.LoanAmount
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <h6 class="mb-0">Interest Rate</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        @Model.Loan.InterestRate
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <h6 class="mb-0">Tenure</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        @Model.Loan.Tenure
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <h6 class="mb-0">Loan Approval Status</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        @Model.Loan.IsApproved
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
