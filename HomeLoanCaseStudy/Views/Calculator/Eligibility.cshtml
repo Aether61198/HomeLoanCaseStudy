@@ -1,0 +1,44 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    th {
+        padding: 10px 0;
+    }
+
+    td {
+        padding: 10px;
+    }
+</style>
+
+<h2>Eligibility Calculator</h2>
+
+@using (Html.BeginForm())
+{
+    <hr />
+    <table>
+        <tr>
+            <th>Monthly Income</th>
+            <td><input type="text" id="txtmonthlyIncome" name="monthlyIncome" class="form-control" value="@ViewData["MonthlyIncome"]"/></td>
+        </tr>
+        <tr>
+            <th>Rate of Interest</th>
+            <td><input type="text" id="txtinterestRate" name="interestRate" class="form-control" disabled value="8.5" /></td>
+        </tr>
+        <tr>
+            <th><input type="submit" value="Calculate" class="btn btn-primary" /></th>
+        </tr>
+        <tr>
+            <th>Eligibility</th>
+            <td><input type="text" class="form-control" disabled value="@ViewData["EligibleAmount"]" /></td>
+        </tr>
+    </table>
+    if (ViewBag.Message != null)
+    {
+        <div class="alert alert-danger">
+            <strong>Error! </strong>@ViewBag.Message
+        </div>
+    }
+}

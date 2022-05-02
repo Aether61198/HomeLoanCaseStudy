@@ -22,7 +22,16 @@
                 <ul class="nav navbar-nav me-auto">
                     <li>@Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("About Us", "About", "Home", null, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Calculator", "Index", "Calculator", null, new { @class = "nav-link" })</li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Calculator
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li>@Html.ActionLink("Eligibility Calculator", "Eligibility", "Calculator", null, new { @class = "dropdown-item" })</li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>@Html.ActionLink("EMI Calculator", "EmiCal", "Calculator", null, new { @class = "dropdown-item" })</li>
+                        </ul>
+                    </li>
                     <li>@Html.ActionLink("Application", "Index", "Application", null, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Contact Us", "Contact", "Home", null, new { @class = "nav-link" })</li>
                 </ul>

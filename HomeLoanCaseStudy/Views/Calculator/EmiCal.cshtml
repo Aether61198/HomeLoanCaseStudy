@@ -1,0 +1,48 @@
+﻿@{
+    ViewBag.Title = "EmiCal";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    th {
+        padding: 10px 0;
+    }
+
+    td {
+        padding: 10px;
+    }
+</style>
+
+<h2>EMI Calculator</h2>
+
+@using (Html.BeginForm())
+{
+    <hr />
+    <table>
+        <tr>
+            <th>Loan Amount</th>
+            <td><input type="text" id="txtloanAmount" name="loanAmount" class="form-control" value="@ViewData["LoanAmount"]" /></td>
+        </tr>
+        <tr>
+            <th>Tenure</th>
+            <td><input type="text" id="txttenure" name="tenure" class="form-control" value="@ViewData["Tenure"]" /></td>
+        </tr>
+        <tr>
+            <th>Rate of Interest</th>
+            <td><input type="text" id="txtinterestRate" name="interestRate" class="form-control" disabled value="8.5" /></td>
+        </tr>
+        <tr>
+            <th><input type="submit" value="Calculate" class="btn btn-primary" /></th>
+        </tr>
+        <tr>
+            <th>EMI</th>
+            <td><input type="text" class="form-control" disabled value="@ViewData["EMI"]" /></td>
+        </tr>
+    </table>
+    if (ViewBag.Message != null)
+    {
+        <div class="alert alert-danger">
+            <strong>Error! </strong>@ViewBag.Message
+        </div>
+    }
+}

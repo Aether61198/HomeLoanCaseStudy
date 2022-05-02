@@ -238,8 +238,9 @@
     <Content Include="Views\Application\LoanDetails.cshtml" />
     <Content Include="Views\Application\PersonalDetails.cshtml" />
     <Content Include="Views\Application\UploadDocuments.cshtml" />
-    <Content Include="Views\Calculator\Index.cshtml" />
+    <Content Include="Views\Calculator\Eligibility.cshtml" />
     <Content Include="Views\LoanTracker\Index.cshtml" />
+    <Content Include="Views\Calculator\EmiCal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

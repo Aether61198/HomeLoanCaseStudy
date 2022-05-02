@@ -16,23 +16,67 @@ namespace HomeLoanCaseStudy.Controllers
             return View();
         }
 
-        [HttpPost]
-        [ActionName("Index")]
-        public ActionResult Index_post()
+        [HttpGet]
+        public ActionResult Eligibility()
         {
-            double ROI = 8.5;
-            ROI /= (12 * 100);
-            double loanamount = Convert.ToDouble(Request["LoanAmt"].ToString());
+            return View();
+        }
 
-            int tenure = Convert.ToInt32(Request["tenure"].ToString()) * 12;
+        [HttpPost]
+        public ActionResult Eligibility(string monthlyIncome)
+        {
+            if (monthlyIncome != "")
+            {
+                int mI = Convert.ToInt32(monthlyIncome);
 
-            double emi = loanamount * ROI * (Math.Pow((1 + ROI), tenure)) / (Math.Pow((1 + ROI), tenure) - 1); // Formula for calculating Emi
+                double eligibleAmount = 0.6 * 60 * mI;
+                eligibleAmount = Math.Round(eligibleAmount, 2);
 
-            StringBuilder sbInterest = new StringBuilder();
-            sbInterest.Append("<b>loanAmount :</b> " + loanamount + "<br/>");
-            sbInterest.Append("<b>loanTenure :</b> " + (tenure / 12) + "<br/>");
-            sbInterest.Append("<b>emi :</b> " + emi);
-            return Content(sbInterest.ToString());
+                ViewData["MonthlyIncome"] = monthlyIncome;
+                ViewData["InterestRate"] = 8.5;
+                ViewData["EligibleAmount"] = eligibleAmount;
+
+                return View();
+            }
+            else
+            {
+                ViewBag.Message = "Enter Monthly Salary";
+                return View();
+            }
+        }
+
+        [HttpGet]
+        public ActionResult EmiCal()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult EmiCal(string loanAmount, string tenure)
+        {
+            if (loanAmount != "" && tenure != "")
+            {
+                double ROI = 8.5;
+                ROI /= (12 * 100);
+
+                int lA = Convert.ToInt32(loanAmount);
+                int tE = Convert.ToInt32(tenure) * 12;
+
+                double emi = lA * ROI * (Math.Pow((1 + ROI), tE)) / (Math.Pow((1 + ROI), tE) - 1); // Formula for calculating Emi
+                emi = Math.Round(emi, 2);
+
+                ViewData["LoanAmount"] = loanAmount;
+                ViewData["Tenure"] = tenure;
+                ViewData["InterestRate"] = 8.5;
+                ViewData["EMI"] = emi;
+
+                return View();
+            }
+            else
+            {
+                ViewBag.Message = "Enter Loan Salary / Tenure";
+                return View();
+            }
         }
     }
 }
