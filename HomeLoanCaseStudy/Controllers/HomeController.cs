@@ -23,7 +23,16 @@ namespace HomeLoanCaseStudy.Controllers
                 else
                 {
                     var userDetailsObj = db.UserDetails.Where(ud => ud.Id.Equals(obj.Id)).FirstOrDefault();
-                    return View(userDetailsObj);
+                    var loanObj = db.Loans.Where(l => l.Id.Equals(obj.Id)).FirstOrDefault();
+
+                    var tables = new SingleUserViewModel
+                    {
+                        User = obj,
+                        UserDetails = userDetailsObj,
+                        Loan = loanObj,
+                    };
+
+                    return View(tables);
                 }
             }
             return View();
@@ -37,7 +46,14 @@ namespace HomeLoanCaseStudy.Controllers
                 var obj = db.Users.Where(u => u.EmailAddress.Equals(User.Identity.Name)).FirstOrDefault();
                 if (obj.UserRole == "Admin")
                 {
-                    return View(db.Users.ToList());
+                    var tables = new UserViewModel
+                    {
+                        Users = db.Users.ToList(),
+                        UserDetails = db.UserDetails.ToList(),
+                        Loans = db.Loans.ToList()
+                    };
+
+                    return View(tables);
                 }
                 return RedirectToAction("Index");
             }

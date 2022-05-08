@@ -1,4 +1,4 @@
-﻿@model HomeLoanCaseStudy.Models.UserDetails
+﻿@model HomeLoanCaseStudy.Models.SingleUserViewModel
 
 @{
     ViewBag.Title = "Home Page";
@@ -6,13 +6,27 @@
 
 <div class="homepage">
     <div class="container text-center">
-        <div class="homepage-text d-flex flex-column justify-content-center gap-3
+        <div class="homepage-text d-flex flex-column justify-content-center gap-1
                  position-absolute top-50 start-50 translate-middle user-select-none">
-            <p class="text-white-50 bd-highlight fs-2">Easy & Simple Application Process</p>
-            <h1 class="homepage-heading bd-highlight">Connecting<br />All Your Loan<br />Needs</h1>
+            <p class="text-white-50 bd-highlight fs-4">Easy & Simple Application Process</p>
+            <h1 class="homepage-heading">Connecting<br />All Your Home Loan<br />Needs</h1>
+            <hr />
             @if (User.Identity.IsAuthenticated)
             {
-                if (Model.AccountNumber != null)
+                if (Model.Loan.ApprovalStatus == "Approved")
+                {
+                    <div class="alert alert-primary">
+                        Your Loan Application has been <strong>approved</strong>. Track the details below!
+                    </div>
+                }
+                else if (Model.Loan.ApprovalStatus == "Rejected")
+                {
+                    <div class="alert alert-danger">
+                        Your Loan Application has been <strong>rejected</strong>. Track the details below!
+                    </div>
+                }
+
+                if (Model.UserDetails.AccountNumber != null)
                 {
                     <a href="@Url.Action("Index", "LoanTracker")" class="btn btn-lg btn-primary p-3 m-4 bd-highlight">
                         Track your Application

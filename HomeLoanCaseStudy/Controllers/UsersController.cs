@@ -49,7 +49,7 @@ namespace HomeLoanCaseStudy.Controllers
                 if (user.UserRole == "Customer")
                 {
                     db.UserDetails.Add(new UserDetails() { Id = user.Id });
-                    db.Loans.Add(new Loan() { Id = user.Id, InterestRate = 8.5f, IsApproved = false });
+                    db.Loans.Add(new Loan() { Id = user.Id, InterestRate = 8.5f, ApprovalStatus = "Pending" });
                     db.SaveChanges();
                 }
                 message = "Registration Done Successfully!";

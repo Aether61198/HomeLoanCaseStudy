@@ -34,7 +34,7 @@ namespace HomeLoanCaseStudy.Models
         [Display(Name = "Property Name")]
         public string PropertyName { get; set; }
 
-        [Display(Name = "EstimatedAmount")]
+        [Display(Name = "Estimated Amount")]
         public double? PropertyEstimatedAmount { get; set; }
 
         [Display(Name = "Eligible Loan Amount")]

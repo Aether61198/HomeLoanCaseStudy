@@ -13,7 +13,7 @@ namespace HomeLoanCaseStudy.Models
         public int Id { get; set; }
 
         [Display(Name = "Approval Status")]
-        public bool? IsApproved { get; set; } // FLAG FOR CHECKING IF THE LOAN IS APPROVED OR NOT
+        public string ApprovalStatus { get; set; } // FLAG FOR CHECKING IF THE LOAN IS APPROVED OR NOT
 
         [Display(Name = "Loan Amount")]
         public double? LoanAmount { get; set; } // THE AMOUNT OF LOAN HE HAS AVAILED (DIFFERENT FROM MAX LOAN AMOUNT)
@@ -29,6 +29,9 @@ namespace HomeLoanCaseStudy.Models
 
         [Display(Name = "EMI Amount")]
         public double? EmiAmount { get; set; } // THE AMOUNT THAT THE USER HAS TO PAY AS EMI EVERY MONTH
+
+        [Display(Name = "Reason for Rejection")]
+        public string Comment { get; set; }
 
         // ASSOCIATION WITH USER DETAILS TABLE
         [Required]

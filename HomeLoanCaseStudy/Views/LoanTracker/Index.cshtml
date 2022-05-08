@@ -5,12 +5,12 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>User Loan Details</h2>
-
 <div class="container text-black" style="padding: 0;">
-    <div class="col-md-8">
+    <div class="col-md-8 position-absolute top-50 start-50 translate-middle">
         <div class="card mb-3">
             <div class="card-body">
+                <h2 class="display-4 fw-normal text-center text-primary">User Loan Details</h2>
+                <hr class="bg-primary" />
                 <div class="row">
                     <div class="col-sm-3">
                         <h6 class="mb-0">Full Name</h6>
@@ -35,24 +35,6 @@
                     </div>
                     <div class="col-sm-9 text-secondary">
                         @Model.User.EmailAddress
-                    </div>
-                </div>
-                <hr>
-                <div class="row">
-                    <div class="col-sm-3">
-                        <h6 class="mb-0">Phone Number</h6>
-                    </div>
-                    <div class="col-sm-9 text-secondary">
-                        @Model.UserDetails.PhoneNumber
-                    </div>
-                </div>
-                <hr>
-                <div class="row">
-                    <div class="col-sm-3">
-                        <h6 class="mb-0">Gender</h6>
-                    </div>
-                    <div class="col-sm-9 text-secondary">
-                        @Model.UserDetails.Gender
                     </div>
                 </div>
                 <hr>
@@ -106,9 +88,21 @@
                         <h6 class="mb-0">Loan Approval Status</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                        @Model.Loan.IsApproved
+                        @Model.Loan.ApprovalStatus
                     </div>
                 </div>
+                @if (Model.Loan.ApprovalStatus == "Rejected")
+                {
+                    <hr />
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Reason for Rejection</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                            @Model.Loan.Comment
+                        </div>
+                    </div>
+                }
             </div>
         </div>
     </div>

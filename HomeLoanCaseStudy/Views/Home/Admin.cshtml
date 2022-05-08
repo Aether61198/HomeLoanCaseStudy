@@ -1,50 +1,54 @@
-﻿@model IEnumerable<HomeLoanCaseStudy.Models.Users>
+﻿@model HomeLoanCaseStudy.Models.UserViewModel
 
 @{
     ViewBag.Title = "Admin";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Admin Dashboard</h2>
+<div class="container text-black">
+    <div class="row">
+        <div class="col-md-6 position-absolute top-50 start-50 translate-middle">
+            <div class="card card-body">
+                <h2 class="display-5 fw-normal text-center text-primary">Users List</h2>
+                <div class="container mb-2">
+                    <hr class="bg-primary" />
+                    <table class="table table-hover">
+                        <thead class="table-primary">
+                            <tr>
+                                <th scope="col">Account No.
+                                <th scope="col">Name</th>
+                                <th scope="col">Email ID</th>
+                                <th scope="col">Approval Status</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Users)
+                            {
+                                if (item.UserRole == "Admin")
+                                {
+                                    continue;
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td>@Model.UserDetails.First(ud => ud.Id == item.Id).AccountNumber</td>
+                                        <td>@item.FirstName @item.LastName</td>
+                                        <td>@item.EmailAddress</td>
+                                        <td>@Model.Loans.First(l => l.Id == item.Id).ApprovalStatus</td>
+                                        <td>
+                                            <a class="btn btn-primary btn-sm" href="@Url.Action("Index", "Admin", new { id = item.Id })">
+                                                View<i class="fa fa-edit ms-2"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-<table class="table text-white">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LastName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EmailAddress)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UserRole)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EmailAddress)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserRole)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-            </td>
-        </tr>
-    }
-
-</table>

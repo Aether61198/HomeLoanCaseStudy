@@ -1,0 +1,70 @@
+﻿@model HomeLoanCaseStudy.Models.Loan
+
+@{
+    ViewBag.Title = "RejectApplication";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (ViewBag.Status != null && Convert.ToBoolean(ViewBag.Status))
+{
+    if (ViewBag.Message != null)
+    {
+        <div class="alert alert-success">
+            <strong>Success! </strong>@ViewBag.Message
+            @Html.ActionLink("User Details", "Index", "Admin", new { id = Model.Id }, new
+             {
+                 @class = "btn btn-primary"
+             })
+        </div>
+    }
+}
+else
+{
+    using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="container text-primary">
+                <div class="row">
+                    <div class="col-md-6 position-absolute top-50 start-50 translate-middle">
+                        <div class="card card-body">
+                            <h2 class="display-4 fw-normal text-center">Reason for Rejection</h2>
+                            <div class="container mb-2">
+                                <hr class="bg-primary" />
+                                <div class="input-group input-group-lg-12 mt-3">
+                                    <div class="form-floating col-12">
+                                        @Html.TextAreaFor(model => model.Comment, new
+                                        {
+                                            @class = "form-control global-input",
+                                            @id = "rejectionComment",
+                                            @placeholder = "Leave a comment here",
+                                            @style = "height: 200px",
+                                            @required = "required"
+                                        })
+                                        <label for="rejectionComment">Enter Reason</label>
+                                    </div>
+                                </div>
+                                <hr class="bg-primary my-3" />
+                                <div class="input-group input-group-lg my-3">
+                                    <button type="submit" class="btn btn-danger" style="min-width: 100%">
+                                            Reject Application<i class="fa fa-times ms-2"></i>
+                                    </button>
+                                </div>
+                                @if (ViewBag.Message != null)
+                                {
+                                    <div class="alert alert-danger">
+                                        <strong>Error! </strong>@ViewBag.Message
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}

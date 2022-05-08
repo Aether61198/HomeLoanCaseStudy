@@ -9,6 +9,6 @@ namespace HomeLoanCaseStudy.Models
     {
         public IEnumerable<Users> Users { get; set; }
         public IEnumerable<UserDetails> UserDetails { get; set; }
-        public IEnumerable <Loan> Loan { get; set; }
+        public IEnumerable <Loan> Loans { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿body {
     padding-top: 100px;
     padding-bottom: 20px;
+    font-family: 'Source Sans Pro', sans-serif;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -26,4 +27,16 @@ textarea {
 .footer-text{
     color: white;
     text-align: center;
+}
+
+.nav-link {
+    font-size: 18px;
+}
+
+.dropdown-item, .nav-btns {
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+.global-input{
+    max-width: 100%;
 }

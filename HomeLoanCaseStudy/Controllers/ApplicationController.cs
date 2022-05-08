@@ -46,7 +46,7 @@ namespace HomeLoanCaseStudy.Controllers
             {
                 var userObj = db.UserDetails.Where(ud => ud.Id.Equals(obj.Id)).FirstOrDefault();
                 var loanObj = db.Loans.Where(l => l.Id.Equals(obj.Id)).FirstOrDefault();
-                if (loanObj.IsApproved == false)
+                if (loanObj.ApprovalStatus.Equals("Pending"))
                 {
                     userObj.PropertyLocation = userDetails.PropertyLocation;
                     userObj.PropertyName = userDetails.PropertyName;
@@ -77,7 +77,9 @@ namespace HomeLoanCaseStudy.Controllers
                 userObj.RetirementAge = userDetails.RetirementAge;
                 userObj.OrganizationType = userDetails.OrganizationType;
                 userObj.EmployerName = userDetails.EmployerName;
-                userObj.MaxLoanAmount = Convert.ToDouble(10000);
+                double eligibleAmount = 0.6 * 60 * (double)userDetails.MonthlySalary;
+                eligibleAmount = Math.Round(eligibleAmount, 2);
+                userObj.MaxLoanAmount = eligibleAmount;
                 db.SaveChanges();
                 return RedirectToAction("LoanDetails");
             }
@@ -96,12 +98,20 @@ namespace HomeLoanCaseStudy.Controllers
             var obj = db.Users.Where(u => u.EmailAddress.Equals(User.Identity.Name)).FirstOrDefault();
             if (obj != null)
             {
+                var userDetailsObj = db.UserDetails.Find(obj.Id);
                 var loanObj = db.Loans.Where(l => l.Id.Equals(obj.Id)).FirstOrDefault();
 
-                loanObj.Tenure = loan.Tenure;
-                loanObj.LoanAmount = loan.LoanAmount;
-                db.SaveChanges();
-                return RedirectToAction("PersonalDetails");
+                if (loan.LoanAmount > userDetailsObj.MaxLoanAmount)
+                {
+                    ViewBag.Message = "Loan Amount entered exceeds the maximum approved loan limit!";
+                }
+                else
+                {
+                    loanObj.Tenure = loan.Tenure;
+                    loanObj.LoanAmount = loan.LoanAmount;
+                    db.SaveChanges();
+                    return RedirectToAction("PersonalDetails");
+                }
             }
             return View(loan);
         }
@@ -141,20 +151,23 @@ namespace HomeLoanCaseStudy.Controllers
         {
             var obj = db.Users.Where(u => u.EmailAddress.Equals(User.Identity.Name)).FirstOrDefault();
             int id = obj.Id;
-            string folder = Server.MapPath(string.Format("~/App_Data/file/{0}", id));
+            string folder = Server.MapPath(string.Format("~/App_Data/files/{0}", id));
+            string[] fileNames = new string[] { "PanCard", "SalarySlip", "LOA", "NOCfromBuilder", "AgreementToSale" };
 
             if (!Directory.Exists(folder))
             {
                 Directory.CreateDirectory(folder);
                 //ViewBag.Message = "Folder " + id.ToString() + " created successfully!";
 
-                foreach (HttpPostedFileBase fileItem in file)
+                for (int i = 0; i < file.Length; i++)
                 {
+                    HttpPostedFileBase fileItem = file[i];
+
                     if (fileItem != null && fileItem.ContentLength > 0)
                     {
                         try
                         {
-                            string fileName = Path.GetFileName(fileItem.FileName);
+                            string fileName = fileNames[i] + ".pdf";
                             string fullPath = Path.Combine(folder, fileName);
                             fileItem.SaveAs(fullPath);
                             ViewBag.Message = "Files uploaded successfully with id = " + id;
@@ -170,7 +183,9 @@ namespace HomeLoanCaseStudy.Controllers
                     }
                 }
                 var userDetailsObj = db.UserDetails.Where(u => u.Id.Equals(obj.Id)).FirstOrDefault();
+                var loanObj = db.Loans.Where(l => l.Id.Equals(obj.Id)).FirstOrDefault();
                 userDetailsObj.AccountNumber = 1000 + Convert.ToInt32(obj.Id);
+                loanObj.ApprovalStatus = "Tentative";
                 db.SaveChanges();
                 return RedirectToAction("Index", "Home");
             }

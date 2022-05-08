@@ -1,0 +1,203 @@
+﻿@model HomeLoanCaseStudy.Models.SingleUserViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="display-4 fw-normal text-center">User Loan Details</h2>
+<hr />
+<div class="container text-black" style="padding: 0;">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <h6 class="mb-0">Full Name</h6>
+                        </div>
+                        <div class="col-sm-8 text-secondary">
+                            @Model.User.FirstName @Model.User.LastName
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <h6 class="mb-0">Account Number</h6>
+                        </div>
+                        <div class="col-sm-8 text-secondary">
+                            @Model.UserDetails.AccountNumber
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <h6 class="mb-0">Email Address</h6>
+                        </div>
+                        <div class="col-sm-8 text-secondary">
+                            @Model.User.EmailAddress
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <h6 class="mb-0">PAN Number</h6>
+                        </div>
+                        <div class="col-sm-8 text-secondary">
+                            @Model.UserDetails.PanNumber
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <h6 class="mb-0">Monthly Salary</h6>
+                        </div>
+                        <div class="col-sm-8 text-secondary">
+                            @Model.UserDetails.MonthlySalary
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <h6 class="mb-0">Max Loan Amount</h6>
+                        </div>
+                        <div class="col-sm-8 text-secondary">
+                            @Model.UserDetails.MaxLoanAmount
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <h6 class="mb-0">Loan Amount</h6>
+                        </div>
+                        <div class="col-sm-8 text-secondary">
+                            @Model.Loan.LoanAmount
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <h6 class="mb-0">Interest Rate</h6>
+                        </div>
+                        <div class="col-sm-8 text-secondary">
+                            @Model.Loan.InterestRate
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <h6 class="mb-0">Tenure</h6>
+                        </div>
+                        <div class="col-sm-8 text-secondary">
+                            @Model.Loan.Tenure
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <h6 class="mb-0">Loan Approval Status</h6>
+                        </div>
+                        <div class="col-sm-8 text-secondary">
+                            @Model.Loan.ApprovalStatus
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <h4>Documents</h4>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4 ms-4">
+                            PAN Card
+                        </div>
+                        <div class="col">
+                            @Html.ActionLink("View", "DisplayPDF", new { id = Model.User.Id, fileName = "PanCard.pdf" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4 ms-4">
+                            Salary Slip
+                        </div>
+                        <div class="col">
+                            @Html.ActionLink("View", "DisplayPDF", new { id = Model.User.Id, fileName = "SalarySlip.pdf" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4 ms-4">
+                            LOA
+                        </div>
+                        <div class="col">
+                            @Html.ActionLink("View", "DisplayPDF", new { id = Model.User.Id, fileName = "LOA.pdf" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4 ms-4">
+                            NOC from Builder
+                        </div>
+                        <div class="col">
+                            @Html.ActionLink("View", "DisplayPDF", new { id = Model.User.Id, fileName = "NOCfromBuilder.pdf" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4 ms-4">
+                            Agreement to Sale
+                        </div>
+                        <div class="col">
+                            @Html.ActionLink("View", "DisplayPDF", new { id = Model.User.Id, fileName = "AgreementToSale.pdf" })
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col">
+                            <h4>Accept Loan Application?</h4>
+                        </div>
+                        @if (Model.Loan.ApprovalStatus == "Tentative")
+                        {
+                            <div class="col">
+                                <a class="btn btn-primary" href="@Url.Action("AcceptApplication", "Admin", new { id = Model.Loan.Id })">
+                                    <i class="fa fa-check me-2"></i>Accept
+                                </a>
+                                <a class="btn btn-danger" href="@Url.Action("RejectApplication", "Admin", new { id = Model.Loan.Id })">
+                                    <i class="fa fa-times me-2"></i>Reject
+                                </a>
+                            </div>
+                        }
+                        else if (Model.Loan.ApprovalStatus == "Approved")
+                        {
+                            <div class="col">
+                                <h4 class="text-primary">Approved</h4>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col">
+                                <h4 class="text-danger">Rejected</h4>
+                            </div>
+                        }
+                    </div>
+                    <hr />
+                    @if (Model.Loan.ApprovalStatus == "Rejected")
+                    {
+                        <div class="row">
+                            <div class="col">
+                                <h4 class="mb-0">Reason for Rejection</h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col text-danger">
+                                <p class="fs-5">@Model.Loan.Comment</p>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<hr />

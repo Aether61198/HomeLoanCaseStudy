@@ -5,58 +5,78 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Login</h2>
-
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <hr />
+
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.EmailAddress, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.EmailAddress, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.EmailAddress, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.Label("Remember Me", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.CheckBox("RememberMe")
+        <div class="container text-primary">
+            <div class="row">
+                <div class="col-md-6 position-absolute top-50 start-50 translate-middle">
+                    <div class="card card-body">
+                        <h2 class="display-4 fw-normal text-center">Login</h2>
+                        <div class="container mb-2">
+                            <hr class="bg-primary" />
+                            <div class="input-group input-group-lg mt-3">
+                                <span class="input-group-text" style="min-width: 175px">
+                                    @Html.LabelFor(model => model.EmailAddress, htmlAttributes: new { @class = "control-label" })
+                                </span>
+                                @Html.EditorFor(model => model.EmailAddress, new 
+                                { 
+                                    htmlAttributes = new 
+                                    {
+                                        @class = "form-control global-input",
+                                        required = "required"
+                                    } 
+                                })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.EmailAddress, "", new { @class = "text-danger mb-3" })
+                            <div class="input-group input-group-lg mt-3">
+                                <span class="input-group-text" style="min-width: 175px">
+                                    @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label" })
+                                </span>
+                                @Html.EditorFor(model => model.Password, new
+                                {
+                                    htmlAttributes = new
+                                    {
+                                        @class = "form-control global-input",
+                                        required = "required"
+                                    }
+                                })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger mb-3" })
+                            <div class="my-3">
+                                @Html.Label("Remember Me", htmlAttributes: new { @class = "control-label ms-3 me-2" })
+                                @Html.CheckBox("RememberMe", htmlAttributes: new { @class = "control-label form-check-input" })
+                            </div>
+                            <hr class="bg-primary my-3" />
+                            <div class="input-group input-group-lg my-3">
+                                <button type="submit" class="btn btn-primary" style="min-width: 100%">
+                                    Login<i class="fa fa-user ms-2"></i>
+                                </button>
+                            </div>
+                            <div class="input-group input-group-lg my-3">
+                                <button class="btn btn-outline-primary" type="button" onclick="location.href='@Url.Action("Register", "Users")'"
+                                        style="min-width: 100%;">
+                                    <i class="fa fa-arrow-left me-2"></i>Register<i class="fa fa-user-plus ms-2"></i>
+                                </button>
+                            </div>
+                            @if (ViewBag.Message != null)
+                            {
+                                <div class="alert alert-danger">
+                                    <strong>Error! </strong>@ViewBag.Message
+                                </div>
+                            }
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Login" class="btn btn-primary" />
-            </div>
-        </div>
     </div>
-
-    if (ViewBag.Message != null)
-    {
-        <div class="alert alert-danger">
-            <strong>Error! </strong>@ViewBag.Message
-        </div>
-    }
 }
-
-<div>
-    @Html.ActionLink("Register Now", "Register", "Users")
-</div>
 
 @section Scripts {
     <script src="~/Scripts/jquery.validate.min.js"></script>
