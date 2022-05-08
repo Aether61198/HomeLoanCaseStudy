@@ -1,42 +1,53 @@
-﻿@{
+﻿@model HomeLoanCaseStudy.Models.SingleUserViewModel
+
+@{
     ViewBag.Title = "Home Page";
 }
 
-@if (User.Identity.IsAuthenticated)
-{
-    <h4>Welcome @User.Identity.Name</h4>
-    using (Html.BeginForm("Logout", "Users", FormMethod.Post, new { id = "logoutForm" }))
-    {
-        <a href="javascript:document.getElementById('logoutForm').submit()">Logout</a>
-    }
-}
-else
-{
-    <div class="jumbotron">
-        <h1>ASP.NET</h1>
-        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-        <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-    </div>
+<div class="homepage">
+    <div class="container text-center">
+        <div class="homepage-text d-flex flex-column justify-content-center gap-1
+                 position-absolute top-50 start-50 translate-middle user-select-none">
+            <p class="text-white-50 bd-highlight fs-4">Easy & Simple Application Process</p>
+            <h1 class="homepage-heading">Connecting<br />All Your Home Loan<br />Needs</h1>
+            <hr />
+            @if (User.Identity.IsAuthenticated)
+            {
+                if (Model.Loan.ApprovalStatus == "Approved")
+                {
+                    <div class="alert alert-primary">
+                        Your Loan Application has been <strong>approved</strong>. Track the details below!
+                    </div>
+                }
+                else if (Model.Loan.ApprovalStatus == "Rejected")
+                {
+                    <div class="alert alert-danger">
+                        Your Loan Application has been <strong>rejected</strong>. Track the details below!
+                    </div>
+                }
 
-    <div class="row">
-        <div class="col-md-4">
-            <h2>Getting started</h2>
-            <p>
-                ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-                enables a clean separation of concerns and gives you full control over markup
-                for enjoyable, agile development.
-            </p>
-            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-        </div>
-        <div class="col-md-4">
-            <h2>Get more libraries</h2>
-            <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-        </div>
-        <div class="col-md-4">
-            <h2>Web Hosting</h2>
-            <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+                if (Model.UserDetails.AccountNumber != null)
+                {
+                    <a href="@Url.Action("Index", "LoanTracker")" class="btn btn-lg btn-primary p-3 m-4 bd-highlight">
+                        Track your Application
+                        <i class="fa fa-arrow-right"></i>
+                    </a>
+                }
+                else
+                {
+                    <a href="@Url.Action("Index", "Application")" class="btn btn-lg btn-primary p-3 m-4 bd-highlight">
+                        Apply Now
+                        <i class="fa fa-arrow-right"></i>
+                    </a>
+                }
+            }
+            else
+            {
+                <a href="@Url.Action("Index", "Application")" class="btn btn-lg btn-primary p-3 m-4 bd-highlight">
+                    Apply Now
+                    <i class="fa fa-arrow-right"></i>
+                </a>
+            }
         </div>
     </div>
-}
+</div>

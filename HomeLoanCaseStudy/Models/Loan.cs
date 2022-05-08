@@ -9,17 +9,32 @@ namespace HomeLoanCaseStudy.Models
 {
     public class Loan // CLASS TO DEFINE ALL DATA MEMBERS OF LOAN INFORMATION TABLE
     {
-        [Key, ForeignKey("User")]
-        public int ID { get; set; }
-        public bool? IsApproved { get; set; } // FLAG FOR CHECKING IF THE LOAN IS APPROVED OR NOT
-        public double? LoanAmount { get; set; } // THE AMOUNT OF LOAN HE HAS AVAILED (DIFFERENT FROM MAX LOAN AMOUNT)
-        public int? NoOfEmi { get; set; } // NO OF EMIs THE USER HAS TO PAY
-        public int? Tenure { get; set; } // TIME IN MONTHS FOR WHICH THE USER HAS TAKEN THE LOAN
-        public double? EmiAmount { get; set; } // THE AMOUNT THAT THE USER HAS TO PAY AS EMI EVERY MONTH
-        public bool? IsLoanCompleted { get; set; } // FLAG FOR CHECKING IF THE USER HAS PAID ALL THE EMIs
+        [Key, ForeignKey("Users")]
+        public int Id { get; set; }
 
-        // ASSOCIATION WITH USER TABLE
+        [Display(Name = "Approval Status")]
+        public string ApprovalStatus { get; set; } // FLAG FOR CHECKING IF THE LOAN IS APPROVED OR NOT
+
+        [Display(Name = "Loan Amount")]
+        public double? LoanAmount { get; set; } // THE AMOUNT OF LOAN HE HAS AVAILED (DIFFERENT FROM MAX LOAN AMOUNT)
+
+        [Display(Name = "Interest Rate")]
+        public float? InterestRate { get; set; }
+
+        [Display(Name = "No of EMIs")]
+        public int? NoOfEmi { get; set; } // NO OF EMIs THE USER HAS TO PAY
+
+        [Display(Name = "Tenure (in years)")]
+        public int? Tenure { get; set; } // TIME IN MONTHS FOR WHICH THE USER HAS TAKEN THE LOAN
+
+        [Display(Name = "EMI Amount")]
+        public double? EmiAmount { get; set; } // THE AMOUNT THAT THE USER HAS TO PAY AS EMI EVERY MONTH
+
+        [Display(Name = "Reason for Rejection")]
+        public string Comment { get; set; }
+
+        // ASSOCIATION WITH USER DETAILS TABLE
         [Required]
-        public virtual User User { get; set; }
+        public virtual Users Users { get; set; }
     }
 }

@@ -1,0 +1,59 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+@using (Html.BeginForm("UploadDocuments", "Application", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="container text-primary">
+            <div class="row">
+                <div class="col-md-6 position-absolute top-50 start-50 translate-middle">
+                    <div class="card card-body">
+                        <h2 class="display-4 fw-normal text-center">Employment Details</h2>
+                        <div class="container mb-2">
+                            <hr class="bg-primary" />
+                            <div class="input-group input-group-lg mt-3">
+                                <label for="file" class="input-group-text" style="min-width: 200px">PAN Card</label>
+                                <input type="file" name="file" accept="application/pdf" class="form-control global-input" required />
+                            </div>
+                            <div class="input-group input-group-lg mt-3">
+                                <label for="file" class="input-group-text" style="min-width: 200px">Salary Slip</label>
+                                <input type="file" name="file" accept="application/pdf" class="form-control global-input" required />
+                            </div>
+                            <div class="input-group input-group-lg mt-3">
+                                <label for="file" class="input-group-text" style="min-width: 200px">LOA</label>
+                                <input type="file" name="file" accept="application/pdf" class="form-control global-input" required />
+                            </div>
+                            <div class="input-group input-group-lg mt-3">
+                                <label for="file" class="input-group-text" style="min-width: 200px">NOC from Builder</label>
+                                <input type="file" name="file" accept="application/pdf" class="form-control global-input" required />
+                            </div>
+                            <div class="input-group input-group-lg mt-3">
+                                <label for="file" class="input-group-text" style="min-width: 200px">Agreement to Sale</label>
+                                <input type="file" name="file" accept="application/pdf" class="form-control global-input" required />
+                            </div>
+                            <hr class="bg-primary my-3" />
+                            <div class="input-group input-group-lg my-3">
+                                <button type="submit" class="btn btn-primary" style="min-width: 100%">
+                                    Submit<i class="fa fa-check ms-2"></i>
+                                </button>
+                            </div>
+                            @if (ViewBag.Message != null)
+                            {
+                                <div class="alert alert-danger">
+                                    <strong>Error! </strong>@ViewBag.Message
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @ViewBag.Message
+    </div>
+}

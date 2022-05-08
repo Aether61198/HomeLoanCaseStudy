@@ -1,0 +1,110 @@
+﻿@model HomeLoanCaseStudy.Models.SingleUserViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container text-black" style="padding: 0;">
+    <div class="col-md-8 position-absolute top-50 start-50 translate-middle">
+        <div class="card mb-3">
+            <div class="card-body">
+                <h2 class="display-4 fw-normal text-center text-primary">User Loan Details</h2>
+                <hr class="bg-primary" />
+                <div class="row">
+                    <div class="col-sm-3">
+                        <h6 class="mb-0">Full Name</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        @Model.User.FirstName @Model.User.LastName
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <h6 class="mb-0">Account Number</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        @Model.UserDetails.AccountNumber
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <h6 class="mb-0">Email Address</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        @Model.User.EmailAddress
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <h6 class="mb-0">PAN Number</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        @Model.UserDetails.PanNumber
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <h6 class="mb-0">Monthly Salary</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        @Model.UserDetails.MonthlySalary
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <h6 class="mb-0">Loan Amount</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        @Model.Loan.LoanAmount
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <h6 class="mb-0">Interest Rate</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        @Model.Loan.InterestRate
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <h6 class="mb-0">Tenure</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        @Model.Loan.Tenure
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <h6 class="mb-0">Loan Approval Status</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        @Model.Loan.ApprovalStatus
+                    </div>
+                </div>
+                @if (Model.Loan.ApprovalStatus == "Rejected")
+                {
+                    <hr />
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Reason for Rejection</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                            @Model.Loan.Comment
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+

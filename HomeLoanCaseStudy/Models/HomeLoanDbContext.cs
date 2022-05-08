@@ -8,8 +8,8 @@ namespace HomeLoanCaseStudy.Models
 {
     public class HomeLoanDbContext : DbContext
     {
-        public DbSet<User> Users { get; set; }
-        public DbSet<Admin> Admins { get; set; }
+        public DbSet<Users> Users { get; set; }
+        public DbSet<UserDetails> UserDetails { get; set; }
         public DbSet<Loan> Loans { get; set; }
     }
 }

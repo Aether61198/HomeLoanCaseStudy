@@ -1,0 +1,115 @@
+﻿@model HomeLoanCaseStudy.Models.UserDetails
+
+@{
+    ViewBag.Title = "Employment Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="container text-primary">
+            <div class="row">
+                <div class="col-md-6 position-absolute top-50 start-50 translate-middle">
+                    <div class="card card-body">
+                        <h2 class="display-4 fw-normal text-center">Employment Details</h2>
+                        <div class="container mb-2">
+                            <hr class="bg-primary" />
+                            <div class="input-group input-group-lg mt-3">
+                                <span class="input-group-text" style="min-width: 200px">
+                                    @Html.LabelFor(model => model.EmploymentType, htmlAttributes: new { @class = "control-label" })
+                                </span>
+                                @Html.DropDownListFor(model => model.EmploymentType, new List<SelectListItem>()
+                                {
+                                    new SelectListItem{Text="Salaried", Value="Salaried"},
+                                    new SelectListItem{Text="Self Employed", Value="Self Employed"}
+                                }, "--Select Employment Type--", new
+                                            {
+                                                htmlAttributes = new
+                                {
+                                    @class = "form-control global-input",
+                                    required = "required"
+                                }
+                                            })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.EmploymentType, "", new { @class = "text-danger mb-3" })
+                            <div class="input-group input-group-lg mt-3">
+                                <span class="input-group-text" style="min-width: 200px">
+                                    @Html.LabelFor(model => model.MonthlySalary, htmlAttributes: new { @class = "control-label" })
+                                </span>
+                                @Html.EditorFor(model => model.MonthlySalary, new
+                                {
+                                    htmlAttributes = new
+                                    {
+                                        @class = "form-control global-input",
+                                        required = "required"
+                                    }
+                                })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.MonthlySalary, "", new { @class = "text-danger mb-3" })
+                            <div class="input-group input-group-lg mt-3">
+                                <span class="input-group-text" style="min-width: 200px">
+                                    @Html.LabelFor(model => model.RetirementAge, htmlAttributes: new { @class = "control-label" })
+                                </span>
+                                @Html.EditorFor(model => model.RetirementAge, new
+                                {
+                                    htmlAttributes = new
+                                    {
+                                        @class = "form-control global-input",
+                                        required = "required"
+                                    }
+                                })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.RetirementAge, "", new { @class = "text-danger mb-3" })
+                            <div class="input-group input-group-lg mt-3">
+                                <span class="input-group-text" style="min-width: 200px">
+                                    @Html.LabelFor(model => model.OrganizationType, htmlAttributes: new { @class = "control-label" })
+                                </span>
+                                @Html.EditorFor(model => model.OrganizationType, new
+                                {
+                                    htmlAttributes = new
+                                    {
+                                        @class = "form-control global-input",
+                                        required = "required"
+                                    }
+                                })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.OrganizationType, "", new { @class = "text-danger mb-3" })
+                            <div class="input-group input-group-lg mt-3">
+                                <span class="input-group-text" style="min-width: 200px">
+                                    @Html.LabelFor(model => model.EmployerName, htmlAttributes: new { @class = "control-label" })
+                                </span>
+                                @Html.EditorFor(model => model.EmployerName, new
+                                {
+                                    htmlAttributes = new
+                                    {
+                                        @class = "form-control global-input",
+                                        required = "required"
+                                    }
+                                })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.EmployerName, "", new { @class = "text-danger mb-3" })
+                            <hr class="bg-primary my-3" />
+                            <div class="input-group input-group-lg my-3">
+                                <button type="submit" class="btn btn-primary" style="min-width: 100%">
+                                    Next<i class="fa fa-arrow-right ms-2"></i>
+                                </button>
+                            </div>
+                            @if (ViewBag.Message != null)
+                            {
+                                <div class="alert alert-danger">
+                                    <strong>Error! </strong>@ViewBag.Message
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
