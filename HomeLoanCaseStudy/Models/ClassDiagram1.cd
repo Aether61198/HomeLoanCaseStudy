@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="HomeLoanCaseStudy.Models.Users">
+    <Position X="4.75" Y="1" Width="1.75" />
+    <AssociationLine Name="UserDetails" Type="HomeLoanCaseStudy.Models.UserDetails" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="6.5" Y="2.129" />
+        <Point X="7.624" Y="2.129" />
+        <Point X="7.624" Y="3.937" />
+        <Point X="9.25" Y="3.937" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="Loan" Type="HomeLoanCaseStudy.Models.Loan" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="4.75" Y="2.129" />
+        <Point X="3.56" Y="2.129" />
+        <Point X="3.56" Y="3.938" />
+        <Point X="2" Y="3.938" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAACAkAAAAQAAAAAAAAAAAAAAAAAAAgCAAAAAgAAIAg=</HashCode>
+      <FileName>Models\Users.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="UserDetails" />
+      <Property Name="Loan" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="HomeLoanCaseStudy.Models.UserDetails">
+    <Position X="9.25" Y="2" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>ABACACkAAwAAAACQAAAAQAAABAgQAAAAAQAAAABAgAA=</HashCode>
+      <FileName>Models\UserDetails.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HomeLoanCaseStudy.Models.Loan">
+    <Position X="0.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEACACAEQgAAACAAAAAAAAAAAEEAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Loan.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
